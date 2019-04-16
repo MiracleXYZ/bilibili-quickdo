@@ -203,11 +203,11 @@
                 addSpeed: { value: ']', text: '增加速度', },
                 resetSpeed:  { value: '\\', text: '重置速度', },
                 danmu: { value: 'd', text: '弹幕', },
-                playAndPause: { value: 'p', text: '暂停播放', },
-                prevPart: { value: 'k', text: '上一P', },
-                nextPart: { value: 'l', text: '下一P', },
+                playAndPause: { value: 'k', text: '暂停播放', },
+                prevPart: { value: 'p', text: '上一P', },
+                nextPart: { value: 'n', text: '下一P', },
                 showDanmuInput: { value: 'enter', text: '发弹幕', },
-                mirror: { value: 'j', text: '镜像', },
+                mirror: { value: 'r', text: '镜像', },
                 danmuTop: { value: 't', text: '顶部弹幕', },
                 danmuBottom: { value: 'b', text: '底部弹幕', },
                 danmuScroll: { value: 's', text: '滚动弹幕', },
@@ -227,8 +227,10 @@
                 resetRepeat: { value: '', text: '清除循环点', },
                 subVolume: { value: '', text: '减少音量', },
                 addVolume: { value: '', text: '增加音量', },
-                subProgress: { value: '', text: '快退', },
-                addProgress: { value: '', text: '快进', },
+                subProgress: { value: 'j', text: '快退', },
+                addProgress: { value: 'l', text: '快进', },
+                subFrame: { value: ',', text: '快退1帧', },
+                addFrame: { value: '.', text: '快进1帧', },
             },
             checkboxes: {
                 checkbox: {
@@ -270,11 +272,11 @@
                 },
                 startCheckbox: {
                     options: {
-                        playAndPause: { text: '自动播放', status: ON },
-                        jump: { text: '自动转跳', status: ON, tips: '跳转另一集无效, 配合跳转快捷键用'},
+                        playAndPause: { text: '自动播放', status: OFF },
+                        jump: { text: '自动转跳', status: OFF, tips: '跳转另一集无效, 配合跳转快捷键用'},
                         lightOff: { text: '自动关灯', status: OFF },
                         fullscreen: { text: '自动全屏', status: OFF, ban:['webFullscreen', 'widescreen'], tips: '浏览器限制不能真全屏' },
-                        webFullscreen: { text: '自动网页全屏', status: ON, ban:['fullscreen', 'widescreen'] },
+                        webFullscreen: { text: '自动网页全屏', status: OFF, ban:['fullscreen', 'widescreen'] },
                         widescreen: { text: '自动宽屏', status: OFF, ban:['webFullscreen', 'fullscreen'] },
                         highQuality: { text: '自动最高画质', status: OFF, ban:['vipHighQuality'] },
                         vipHighQuality: { text: '自动最高画质(大会员使用)', status: OFF, ban:['highQuality'] },
@@ -298,7 +300,8 @@
                 minSpeed: { text: '最小播放速度倍数', value: 0.25 },
                 maxSpeed: { text: '最大播放速度倍数', value: 4 },
                 volume: { text: '音量调整百分比', value: 1 },
-                videoProgress: { text: '快进/快退调整秒数', value: 1 },
+                videoProgress: { text: '快进/快退调整秒数', value: 5 },
+                frameProgress: { text: '1帧持续秒数', value: 0.033},
                 rotationDeg: { text: '旋转角度', value: 90 },
                 ultraWidescreenHeightPercent: { text: '超宽屏高度百分比', value: 100 },
                 playerHeightPercent: { text: '播放器高度百分比', value: 100 },
@@ -693,6 +696,12 @@
         },
         addProgress() {
             this.h5Player[0].currentTime += this.getVarSetting('videoProgress');
+        },
+        subFrame() {
+            this.h5Player[0].currentTime -= this.getVarSetting('frameProgress');
+        },
+        addFrame() {
+            this.h5Player[0].currentTime += this.getVarSetting('frameProgress');
         },
         moreDescribe() {
             this.getCheckboxSetting('moreDescribe') === ON && q('div [report-id="abstract_spread"]').click();
